@@ -1,5 +1,5 @@
 {
-  "name": "inferno-router",
+  "name": "@twc/inferno-router",
   "version": "1.0.7",
   "license": "MIT",
   "description": "Provides routing functionality for Inferno",

@@ -1,5 +1,5 @@
 {
-  "name": "inferno-server",
+  "name": "@twc/inferno-server",
   "version": "1.0.7",
   "license": "MIT",
   "description": "Provides methods to render HTML strings from Inferno elements",

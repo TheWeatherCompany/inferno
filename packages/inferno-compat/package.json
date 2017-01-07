@@ -1,5 +1,5 @@
 {
-  "name": "inferno-compat",
+  "name": "@twc/inferno-compat",
   "version": "1.0.7",
   "license": "MIT",
   "description": "Provides a compatibility with React codebases",

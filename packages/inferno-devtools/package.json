@@ -1,5 +1,5 @@
 {
-  "name": "inferno-devtools",
+  "name": "@twc/inferno-devtools",
   "version": "1.0.7",
   "license": "MIT",
   "description": "Provides support for React's Dev Tools for Inferno",

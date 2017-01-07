@@ -1,5 +1,5 @@
 {
-  "name": "inferno-component",
+  "name": "@twc/inferno-component",
   "version": "1.0.7",
   "license": "MIT",
   "description": "Provides ES2015 stateful components (with lifecycle events) to Inferno",

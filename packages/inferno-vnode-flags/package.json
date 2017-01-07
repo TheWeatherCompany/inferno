@@ -1,5 +1,5 @@
 {
-  "name": "inferno-vnode-flags",
+  "name": "@twc/inferno-vnode-flags",
   "version": "1.0.7",
   "license": "MIT",
   "description": "Provides an enum of all possible VNode Flags used when calling Inferno.createVNode",

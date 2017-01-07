@@ -1,5 +1,5 @@
 {
-  "name": "inferno-test-utils",
+  "name": "@twc/inferno-test-utils",
   "version": "1.0.7",
   "license": "MIT",
   "description": "Provides test utilities to help with creating and maintaining tests for Inferno applications",

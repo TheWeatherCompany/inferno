@@ -1,5 +1,5 @@
 {
-  "name": "inferno-mobx",
+  "name": "@twc/inferno-mobx",
   "version": "1.0.7",
   "license": "MIT",
   "description": "Official Inferno bindings for Mobx",

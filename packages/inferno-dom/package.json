@@ -1,5 +1,5 @@
 {
-  "name": "inferno-dom",
+  "name": "@twc/inferno-dom",
   "version": "1.0.7",
   "license": "MIT",
   "description": "Provides methods to render DOM nodes from Inferno elements",

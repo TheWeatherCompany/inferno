@@ -1,5 +1,5 @@
 {
-  "name": "inferno-create-element",
+  "name": "@twc/inferno-create-element",
   "version": "1.0.7",
   "license": "MIT",
   "description": "Provides methods to create Inferno VNodes",

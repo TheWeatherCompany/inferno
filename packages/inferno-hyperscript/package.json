@@ -1,5 +1,5 @@
 {
-  "name": "inferno-hyperscript",
+  "name": "@twc/inferno-hyperscript",
   "version": "1.0.7",
   "license": "MIT",
   "description": "Bridging hyperscript to InfernoJS",

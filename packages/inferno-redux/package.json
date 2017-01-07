@@ -1,5 +1,5 @@
 {
-  "name": "inferno-redux",
+  "name": "@twc/inferno-redux",
   "version": "1.0.7",
   "license": "MIT",
   "description": "Official Inferno bindings for Redux",
