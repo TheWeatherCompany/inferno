@@ -1,9 +1,8 @@
 import { expect } from 'chai';
 import { assert, spy } from 'sinon';
 import Component from 'inferno-component';
-import Inferno, { render } from 'inferno';
+import { render } from 'inferno';
 import { innerHTML } from '../../tools/utils';
-Inferno; // suppress ts 'never used' error
 
 describe('Children - (JSX)', () => {
 	let container;
@@ -802,9 +801,9 @@ describe('Children - (JSX)', () => {
 		});
 
 		it('NONKEYED - should remove children from correct location when there is 2 dynamic static items and 2 lists', function() {
-			let items = ['a', 'b', 'c'];
-			let emptyArray = [];
-			let items3 = ['v', 'a'];
+			const items = ['a', 'b', 'c'];
+			const emptyArray = [];
+			const items3 = ['v', 'a'];
 
 			let activeOne;
 			let activeTwo;
@@ -870,9 +869,9 @@ describe('Children - (JSX)', () => {
 		});
 
 		it('KEYED - should remove children from correct location when there is dynamic static item', function() {
-			let items = ['a', 'b', 'c'];
-			let emptyArray = [];
-			let items3 = ['v', 'a'];
+			const items = ['a', 'b', 'c'];
+			const emptyArray = [];
+			const items3 = ['v', 'a'];
 			let visible = false;
 
 			let activeOne;
@@ -1318,7 +1317,8 @@ describe('Children - (JSX)', () => {
 						firstClassCitizen = <div>b</div>;
 					}
 
-					return (
+					// variable for debugging
+					const node = (
 						<div>
 							<div>a</div>
 							{firstClassCitizen}
@@ -1326,6 +1326,8 @@ describe('Children - (JSX)', () => {
 							<div>C</div>
 						</div>
 					);
+
+					return node;
 				}
 			}
 

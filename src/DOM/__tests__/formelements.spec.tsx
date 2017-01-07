@@ -1,7 +1,6 @@
 import { expect } from 'chai';
 import Component from 'inferno-component';
-import Inferno, { render } from 'inferno';
-Inferno; // suppress ts 'never used' error
+import { render } from 'inferno';
 
 describe('FormElements', () => {
 	let container;
@@ -139,7 +138,7 @@ describe('FormElements', () => {
 
 			it('Should pre select option by value', () => {
 				render(<SelectList value="B"/>, container);
-				let selectList = container.querySelector('select');
+				const selectList = container.querySelector('select');
 				expect(selectList.childNodes[0].selected).to.equal(false);
 				expect(selectList.childNodes[1].selected).to.equal(true);
 				expect(selectList.childNodes[2].selected).to.equal(false);

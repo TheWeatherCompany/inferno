@@ -2,8 +2,7 @@ import { expect } from 'chai';
 import { spy } from 'sinon';
 import Component from 'inferno-component';
 import { isNullOrUndef } from '../../shared';
-import Inferno, { render } from 'inferno';
-Inferno; // suppress ts 'never used' error
+import { render } from 'inferno';
 
 describe('Columns like tests - (JSX)', () => {
 	let container;
@@ -142,7 +141,7 @@ describe('Columns like tests - (JSX)', () => {
 				// Verify items
 				// Skip first - its hardcoded
 				for (let j = 1; j < columnChildNodes.length; j++) {
-					let itemRoot = columnChildNodes[j];
+					const itemRoot = columnChildNodes[j];
 					expect(itemRoot.innerHTML).to.equal(columns[i].items[j - 1].text.toString(), 'item content check');
 				}
 			}

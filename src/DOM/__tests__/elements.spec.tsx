@@ -1,13 +1,9 @@
-import Inferno, { render } from 'inferno';
-
+import { render } from 'inferno';
 import { assert, spy } from 'sinon';
-
 import createElement from 'inferno-create-element';
 import { innerHTML } from '../../tools/utils';
 import { expect } from 'chai';
 import {createTextVNode} from "../../core/VNodes";
-
-Inferno; // suppress ts 'never used' error
 
 describe('Elements (JSX)', () => {
 	let container;
@@ -779,8 +775,8 @@ describe('Elements (JSX)', () => {
 		}
 
 		const obj = {
-			fn () {
-			}, click () {
+			fn() {
+			}, click() {
 			}
 		};
 		const bool = false;

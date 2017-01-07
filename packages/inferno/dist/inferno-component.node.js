@@ -1,5 +1,5 @@
 /*!
- * inferno-component v1.0.7
+ * inferno-component v1.0.8
  * (c) 2017 Dominic Gannaway
  * Released under the MIT License.
  */
@@ -189,6 +189,9 @@ function applyState(component, force, callback) {
         if (!isNullOrUndef(callback)) {
             callback();
         }
+    }
+    else if (callback) {
+        callback();
     }
 }
 var Component$1 = function Component(props, context) {

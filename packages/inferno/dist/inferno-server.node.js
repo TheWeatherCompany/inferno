@@ -1,5 +1,5 @@
 /*!
- * inferno-server v1.0.7
+ * inferno-server v1.0.8
  * (c) 2017 Dominic Gannaway
  * Released under the MIT License.
  */
@@ -90,6 +90,11 @@ function throwError(message) {
         message = ERROR_MSG;
     }
     throw new Error(("Inferno Error: " + message));
+}
+function warning(condition, message) {
+    if (!condition) {
+        console.error(message);
+    }
 }
 
 var options = {
@@ -216,18 +221,26 @@ function isVNode(o) {
     return !!o.flags;
 }
 
+function applyKey(index, vNode) {
+    vNode.key = "." + index;
+    return vNode;
+}
 function applyKeyIfMissing(index, vNode) {
     if (isNull(vNode.key)) {
-        vNode.key = "." + index;
+        return applyKey(index, vNode);
     }
     return vNode;
 }
-function _normalizeVNodes(nodes, result, index, keyCounter) {
+function applyKeyPrefix(index, vNode) {
+    vNode.key += "." + index;
+    return vNode;
+}
+function _normalizeVNodes(nodes, result, index, keyCounter, subTreePosition) {
     for (; index < nodes.length; index++) {
         var n = nodes[index];
         if (!isInvalid(n)) {
             if (isArray(n)) {
-                keyCounter = _normalizeVNodes(n, result, 0, keyCounter);
+                keyCounter = _normalizeVNodes(n, result, 0, keyCounter, subTreePosition++);
             }
             else {
                 if (isStringOrNumber(n)) {
@@ -236,7 +249,14 @@ function _normalizeVNodes(nodes, result, index, keyCounter) {
                 else if (isVNode(n) && n.dom) {
                     n = cloneVNode(n);
                 }
-                result.push((applyKeyIfMissing(keyCounter++, n)));
+                if (isNull(n.key)) {
+                    n = applyKey(keyCounter, n);
+                }
+                else {
+                    n = applyKeyPrefix(subTreePosition, n);
+                }
+                result.push(n);
+                keyCounter++;
             }
         }
         else {
@@ -264,7 +284,7 @@ function normalizeVNodes(nodes) {
         keyCounter++;
         if (isInvalid(n) || isArray(n)) {
             var result = (newNodes || nodes).slice(0, i);
-            keyCounter = _normalizeVNodes(nodes, result, i, keyCounter);
+            keyCounter = _normalizeVNodes(nodes, result, i, keyCounter, 1);
             return result;
         }
         else if (isStringOrNumber(n)) {
@@ -358,6 +378,22 @@ function normalize(vNode) {
     }
     if (hasProps && !isInvalid(props.children)) {
         props.children = normalizeChildren(props.children);
+    }
+    if (process.env.NODE_ENV !== 'production') {
+        // This code will be stripped out from production CODE
+        // It will help users to track errors in their applications.
+        function verifyKeys(vNodes) {
+            var keyValues = vNodes.map(function (vnode) { return vnode.key; });
+            keyValues.some(function (item, idx) {
+                var hasDuplicate = keyValues.indexOf(item) !== idx;
+                warning(!hasDuplicate, 'Infreno normalisation(...): Encountered two children with same key, all keys must be unique within its siblings. Duplicated key is:'
+                    + item + ' Duplicated node: ' + JSON.stringify(vNodes[idx]));
+                return hasDuplicate;
+            });
+        }
+        if (vNode.children && Array.isArray(vNode.children)) {
+            verifyKeys(vNode.children);
+        }
     }
 }
 

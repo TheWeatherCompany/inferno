@@ -7,23 +7,35 @@ import {
 	isNullOrUndef,
 	isString,
 	isStringOrNumber,
-	isUndefined,
+	isUndefined, warning,
 } from '../shared';
+
+function applyKey(index: number, vNode: VNode) {
+	vNode.key = `.${ index }`;
+
+	return vNode;
+}
 
 function applyKeyIfMissing(index: number, vNode: VNode): VNode {
 	if (isNull(vNode.key)) {
-		vNode.key = `.${ index }`;
+		return applyKey(index, vNode);
 	}
 	return vNode;
 }
 
-function _normalizeVNodes(nodes: any[], result: VNode[], index: number, keyCounter: number): number {
+function applyKeyPrefix(index: number, vNode: VNode): VNode {
+	vNode.key += `.${ index }`;
+
+	return vNode;
+}
+
+function _normalizeVNodes(nodes: any[], result: VNode[], index: number, keyCounter: number, subTreePosition: number): number {
 	for (; index < nodes.length; index++) {
 		let n = nodes[index];
 
 		if (!isInvalid(n)) {
 			if (isArray(n)) {
-				keyCounter = _normalizeVNodes(n, result, 0, keyCounter);
+				keyCounter = _normalizeVNodes(n, result, 0, keyCounter, subTreePosition++);
 			} else {
 				if (isStringOrNumber(n)) {
 					n = createTextVNode(n);
@@ -31,7 +43,14 @@ function _normalizeVNodes(nodes: any[], result: VNode[], index: number, keyCount
 					n = cloneVNode(n);
 				}
 
-				result.push((applyKeyIfMissing(keyCounter++, n as VNode)));
+				if (isNull(n.key)) {
+					n = applyKey(keyCounter, n as VNode);
+				} else {
+					n = applyKeyPrefix(subTreePosition, n as VNode);
+				}
+
+				result.push(n);
+				keyCounter++;
 			}
 		} else {
 			// Support for nulls
@@ -62,7 +81,7 @@ export function normalizeVNodes(nodes: any[]): VNode[] {
 		if (isInvalid(n) || isArray(n)) {
 			const result = (newNodes || nodes).slice(0, i) as VNode[];
 
-			keyCounter = _normalizeVNodes(nodes, result, i, keyCounter);
+			keyCounter = _normalizeVNodes(nodes, result, i, keyCounter, 1);
 			return result;
 		} else if (isStringOrNumber(n)) {
 			if (!newNodes) {
@@ -78,6 +97,7 @@ export function normalizeVNodes(nodes: any[]): VNode[] {
 			newNodes.push(applyKeyIfMissing(keyCounter, cloneVNode(n)));
 		}
 	}
+
 	return newNodes || nodes as VNode[];
 }
 
@@ -87,6 +107,7 @@ function normalizeChildren(children: InfernoChildren | null) {
 	} else if (isVNode(children as VNode) && (children as VNode).dom) {
 		return cloneVNode(children as VNode);
 	}
+
 	return children;
 }
 
@@ -153,5 +174,28 @@ export function normalize(vNode: VNode): void {
 	}
 	if (hasProps && !isInvalid(props.children)) {
 		props.children = normalizeChildren(props.children);
+	}
+
+	if (process.env.NODE_ENV !== 'production') {
+
+		// This code will be stripped out from production CODE
+		// It will help users to track errors in their applications.
+
+		function verifyKeys(vNodes) {
+			const keyValues = vNodes.map(function(vnode){ return vnode.key; });
+			keyValues.some(function(item, idx){
+				const hasDuplicate = keyValues.indexOf(item) !== idx;
+
+				warning(!hasDuplicate, 'Infreno normalisation(...): Encountered two children with same key, all keys must be unique within its siblings. Duplicated key is:'
+					+ item + ' Duplicated node: ' + JSON.stringify(vNodes[idx]));
+
+				return hasDuplicate;
+			});
+		}
+
+
+		if (vNode.children && Array.isArray(vNode.children)) {
+			verifyKeys(vNode.children)
+		}
 	}
 }

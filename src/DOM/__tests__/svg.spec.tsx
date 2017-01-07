@@ -1,7 +1,6 @@
 import { expect } from 'chai';
 import { innerHTML } from '../../tools/utils';
-import Inferno, { render } from 'inferno';
-Inferno; // suppress ts 'never used' error
+import { render } from 'inferno';
 
 describe('createTree - SVG (JSX)', () => {
 
@@ -105,7 +104,7 @@ describe('createTree - SVG (JSX)', () => {
 
 	it('should set and remove dynamic class property', () => {
 
-		let value = 'foo';
+		const value = 'foo';
 
 		render(<svg className={ value }/>, container);
 
@@ -121,7 +120,7 @@ describe('createTree - SVG (JSX)', () => {
 
 	it('should set and remove dynamic class attribute', () => {
 
-		let value = 'foo';
+		const value = 'foo';
 
 		render(<svg className={ value }/>, container);
 
@@ -144,7 +143,7 @@ describe('createTree - SVG (JSX)', () => {
 		expect(container.firstChild.tagName).to.eql('svg');
 		expect(container.firstChild.getAttribute('class')).to.equal('bar');
 
-		let value = 'foo';
+		const value = 'foo';
 
 		render(<svg className={ value }/>, container);
 		expect(container.firstChild.tagName).to.eql('svg');

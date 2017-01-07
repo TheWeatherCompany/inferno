@@ -2,8 +2,7 @@ import { expect } from 'chai';
 import { assert, spy } from 'sinon';
 import Component from 'inferno-component';
 import { innerHTML } from '../../tools/utils';
-import Inferno, { render } from 'inferno';
-Inferno; // suppress ts 'never used' error
+import { render } from 'inferno';
 
 describe('Stateful Component updates', () => {
 
@@ -168,7 +167,7 @@ describe('Stateful Component updates', () => {
 
 		render(<A />, container);
 		expect(container.innerHTML).to.equal(innerHTML('<div><input type="checkbox"><input type="checkbox"><input type="checkbox"></div>'));
-		let firstChild = container.firstChild;
+		const firstChild = container.firstChild;
 		expect(firstChild.childNodes[0].checked).to.equal(false);
 		expect(firstChild.childNodes[1].checked).to.equal(false);
 		expect(firstChild.childNodes[2].checked).to.equal(false);
@@ -572,7 +571,7 @@ describe('Stateful Component updates', () => {
 	});
 
 	it('Should not append when replacing ES6 component with functional component', () => {
-		const A = function () {
+		const A = function() {
 			return (
 				<div>
 					<div className="topheader">
