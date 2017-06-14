@@ -98,8 +98,6 @@ function hydrateElement(vNode: VNode, dom: Element, lifecycle: LifecycleClass, c
 	vNode.dom = dom;
 	if (children) {
 		hydrateChildren(children, dom, lifecycle, context, isSVG);
-	} else if (dom.firstChild !== null) {
-		dom.textContent = ''; // dom has content, but VNode has no children remove everything from DOM
 	}
 	if (props) {
 		let hasControlledValue = false;
