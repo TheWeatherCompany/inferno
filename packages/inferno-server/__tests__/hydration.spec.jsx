@@ -374,7 +374,7 @@ describe('SSR Hydration - (JSX)', () => {
 			SSR: <Comp4><h1>Hello world</h1><p><em>Foo</em></p><p>Woot</p><p><em>Bar</em></p></Comp4>,
 			SSR_expected: '<section><h1>Hello world</h1><p><em>Foo</em></p><p>Woot</p><p><em>Bar</em></p></section>',
 			CSR: <Comp4><h1>Hello world again!</h1><p><em>{[ 1,2,3 ]}</em></p><p>{null}</p><p><em>Foo</em></p></Comp4>,
-			CSR_expected: '<section><h1>Hello world again!</h1><p><em>123</em></p><p></p><p><em>Foo</em></p></section>'
+			CSR_expected: '<section><h1>Hello world again!</h1><p><em>123</em></p><p>Woot</p><p><em>Foo</em></p></section>'
 		},
 		{
 			SSR: <div>Hello world, { 'Foo!' }</div>,
